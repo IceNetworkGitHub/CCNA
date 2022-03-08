@@ -16,22 +16,22 @@
 - ACLs applied to an interface do not apply to traffic which originates from the router itself.
 - An ACL is read from top to bottom.
   - **As soon as a rule matches the packet, the permit or deny action is applied and the ACL is not processed any further.**
-    - The order of rules is important.
-- The original use of ACLs was a security feature to decide if traffic should be allowed to pass through the router. By default a router will allow all traffic to pass between its interfaces. When ACLs are applied the router identifies traffic and then decides if it will be allowed or not.
+  - The order of rules is important.
+- The original use of ACLs was a security feature to decide if traffic should be allowed to pass through the router. By default a router will allow all traffic to pass between its interfaces. When ACLs are applied the router identifies the traffic and then decides if it will be allowed or not.
 - ACLs are also used in other software policies when traffic has to be identified, for example.
-  - Identify traffic to give better service to in a QoS Quality of Service Policy.
-    - Identify traffic to translate to a different IP address in a NAT Network Address Translation Policy.
+  - Identify traffic to give better service in a (QoS) Quality of Service Policy.
+  - Identify traffic to translate to a different IP address in a (NAT) Network Address Translation Policy.
 - Access Control Lists are made up of Access Control Entries which are a series of permit or deny rules. Each ACE is written in a seperate line. Here is an example and notice the number, it's 100, which means it's an extended list which gives us more options.
   - ```access-list 100 deny tcp 10.10.30.0 0.0.0.255 gt 49151 10.10.20.1 0.0.0.0 eq 23```
-    - The source number is gt (greater than) 49151. 10.10.30.0 is the source. 10.10.20.1 is the destination.  23 is the port.
-- Remember, if this was our list, without the ANY PERMIT we would block all traffic from coming through.
+  - The source number is gt (greater than) 49151. 10.10.30.0 is the source. 10.10.20.1 is the destination.  23 is the port.
+- Remember, if this was our list, that without a ANY PERMIT as the last command we would block all traffic from coming through.
 
 ## Access Groups ##
 
 - ACLs are applied at the interface level with the Access-Group command.
 - ACLs can be applied in the inbound or outbound direction.
 - You can have a maximum of one ACL per interface per direction.
-- You can have both an inbound and an outbound ACL on the same interface, but not 2 inbound or outbound ACLs.
+- You can have both an inbound and an outbound ACL on the same interface, but not 2 inbound, or 2 outbound ACLs.
 - An interface can have no ACL applied, an inbound ACL only, an outbound ACL only, or ACLs in both directions.
 - Done on the interface level. ```ip access-group 100 out``` or ```ip access-group 101 in``` 
 - ```show ip interface f1/0 | include access list```
@@ -47,7 +47,7 @@
 
 - First check to see if there are any access lists.
   - show access-lists
-- Enter global configuration mode.
+- To create an extended numbered list, enter global configuration mode.
   - access-list 100 deny icmp host 10.16.0.10 host 192.168.1.100 log
 - To deny http traffic from a specific host to a specific server.
   - access-list 100 deny tcp host 10.16.0.10 host 192.168.1.100 eq 80
@@ -71,22 +71,25 @@
 
 ## To Create and Verify an ACL ##
 
-- First is to check to see if there are any access lists already. If there is a list already and we start typing away commands, we are adding to the list that’s already in place, not creating a new one. It's also a good rule to put a remark on an ACL.
-- To put a remark on an acceess list.
-  - ```access-list 1 remark this access list is for X```
+- First is to check to see if there are any access lists already. If there is a list already and we start typing away commands, we are adding to the list that’s already in place, not creating a new one.
 - ```show access-lists```
 - ```show ip access-lists```
-- It’s also good to check the access lists on the interface.
-  - See outgoing access list and inbound access list.
+- ```show run | sec access-list```
+
+ It's also a good rule to put a remark on an ACL.
+- To put a remark on an acceess list.
+  - ```access-list 1 remark this access list is for X```
+- It’s also good to check the access lists on the interface itself. To see outgoing access list and inbound access list.
+  - ddd
 - Create the list.
-  - ```access list 1 deny host 10.16.0.10 log```
+  - ```access list 1 deny host 10.16.0.10```
   - ```access list 1 permit any```
   - There is an implicit 'deny any any' rule at the bottom of ACLs.
   - If an ACL is not applied to an interface, all traffic is allowed.
-    - **If an ACL is applied, all traffic is denied except what is explicitly allowed.**
-    - Many companies put this statement at the end of the ACL so they log any deny's.
-    - ```access-list 1 deny any log```
-    - We know by now that the default behavior is deny any at the end of the ACL. Another way to know if things are being denied is to explicitly configure a command do deny all traffic (for example), ``` access-list 1 deny any ``` at the end of an ACL. Why would we do that when it does it by default? Because the ACL show commands list counters for the number of packets matched by each command in the ACL, but there is not counter for that impicit deny any concept at the end of the ACL. So, if you want to see counters for how many packets are matched by the deny any logic at the end of the ACL, configure an explicit deny any.
+  - **If an ACL is applied, all traffic is denied except what is explicitly allowed.**
+  - Many companies put this statement at the end of the ACL so they log any deny's.
+  - ```access-list 1 deny any log```
+  - We know by now that the default behavior is deny any at the end of the ACL. Another way to know if things are being denied is to explicitly configure a command to deny all traffic (for example), ``` access-list 1 deny any ``` at the end of an ACL. Why would we do that when it does it by default? Because the ACL show commands list counters for the number of packets matched by each command in the ACL, but there is no counter for that impicit deny any concept at the end of the ACL. So, if you want to see counters for how many packets are matched by the deny any logic at the end of the ACL, configure an explicit deny any.
 
 &nbsp;
 
@@ -96,7 +99,21 @@
   - ```ip access-list extended 110```
   - ```15 deny tcp host 10.10.10.11 host 10.10.50.10 eq telnet```
 
+## To Delete ACL Entry ##
+- Be careful to not do ```no access-list 99 permit 10.16.0.7```
+- This would remove the whole numbered access list 99, not just that specific entry.
+- The correct way would be to go into global configuration mode.
+  - ```ip access-list standard 99```
+  - ```no entry-number``` Let's say you wanted to delete no 10. ```no 10```
+
+  ![ACL Entry](./acl-delete-entry.jpg)
+- Now our access list starts at 20, instead of 10. If we want to fix that and reorder the list we could do the following in global config mode. 99 is our list and the first 10 is the number we want to start from. The second 10 says we want to increment it by 10. First entry is 10, second one is 20, etc.
+  - ```ip access-list resequence 99 10 10```
+
 ## Wildcard Mask With an ACL ##
 
 - access list 2 deny host 10.16.0.0 0.0.255.255
 - Remember to create permit any for access list 2.
+
+## Cisco Documentation ##
+- https://www.cisco.com/c/en/us/support/docs/security/ios-firewall/23602-confaccesslists.html
