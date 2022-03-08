@@ -2,11 +2,11 @@
 
 ## General Info ##
 
-### Types of IP ACLs ###
+### Types of ACLs ###
 
 - Standard numbered ACLs (1-99).
 - Extended numbered ACLs (100-199).
-- ADditional ACL numbers (1300-1999 standard, 2000-2699 extended).
+- Additional ACL numbers (1300-1999 standard, 2000-2699 extended).
 - Named ACLs.
 - Improved editing with sequence numbers.
 - ACLs are either named or numbered and they are also standard or extended. Extended ACLs have much more robust abilities in matching packets.
