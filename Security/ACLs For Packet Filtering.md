@@ -77,6 +77,7 @@
 - ```show run | sec access-list```
 
  It's also a good rule to put a remark on an ACL.
+
 - To put a remark on an acceess list.
   - ```access-list 1 remark this access list is for X```
 - It’s also good to check the access lists on the interface itself. To see outgoing access list and inbound access list.
@@ -99,7 +100,13 @@
   - ```ip access-list extended 110```
   - ```15 deny tcp host 10.10.10.11 host 10.10.50.10 eq telnet```
 
+## Hide the fact that ICMP or other traffic is filtered ##
+
+- You want to hide, destination host unreachable U.U.U? I think that's a good idea. :)
+- Under the interface that's sending the IP unreachable messages do ```no ip unreachables```.
+
 ## To Delete ACL Entry ##
+
 - Be careful to not do ```no access-list 99 permit 10.16.0.7```
 - This would remove the whole numbered access list 99, not just that specific entry.
 - The correct way would be to go into global configuration mode.
@@ -116,4 +123,5 @@
 - Remember to create permit any for access list 2.
 
 ## Cisco Documentation ##
+
 - https://www.cisco.com/c/en/us/support/docs/security/ios-firewall/23602-confaccesslists.html
