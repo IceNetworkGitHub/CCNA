@@ -47,10 +47,23 @@
 
 - First check to see if there are any access lists.
   - show access-lists
+- Extended ACL access-list command requires three matching parameters: the IP protocol type, the source IP address, and the destination IP address.
+- Remember that when matching a specific IP address, the extended ACL requires the use of the **host** keyword. You cannot simply list the IP address alone.
 - To create an extended numbered list, enter global configuration mode.
   - access-list 100 deny icmp host 10.16.0.10 host 192.168.1.100 log
 - To deny http traffic from a specific host to a specific server.
   - access-list 100 deny tcp host 10.16.0.10 host 192.168.1.100 eq 80
+- The eq shouldn't always be at the end of the line. Let's say we want to deny traffic from web server 10.2.3.4/23's subnet to clients in the same subnet as host 10.4.5.6/22. We would put the eq www after the source, since we are denying traffic **from** the web server.
+  - ```access-list 104 permit tcp 10.2.2.0 0.0.1.255 eq www 10.4.4.0 0.0.3.255```
+
+### Extended ACLs and Ports ###
+
+- With extended ACLs we have the option of working with source and destination ports. Here are the syntax keywords:
+  - ```eq``` | Stands for equal.
+  - ```ne``` | Stands for not equal.
+  - ```lt``` | Stands for less than.
+  - ```gt``` | Stands for greater than.
+  - ```range``` | Stands for, you guessed it, range. :)
 
 ## Named ACLs ##
 
@@ -115,5 +128,13 @@
 - access list 2 deny host 10.16.0.0 0.0.255.255
 - Remember to create permit any for access list 2.
 
+## Final Best Practices According to Cisco Press and Wendell Odom ##
+
+- Place extended ACLs as close as possible to the source of the packet. This strategy allows ACLs to discard the packets early.
+- Place standard ACLs as close as possbile to the destination of the packet. This strategy avoids the mistake with standard ACLs (which match the source IPv4 address only) of unintentionally discarding packets that did no need to be discarded.
+- Place more specific statements early in the ACL.
+- Disable an ACL from its interface (using no ip access-group interface subcommand) before making changes to the ACL.
+
 ## Cisco Documentation ##
 - https://www.cisco.com/c/en/us/support/docs/security/ios-firewall/23602-confaccesslists.html
+- Cisco Learning Network.
