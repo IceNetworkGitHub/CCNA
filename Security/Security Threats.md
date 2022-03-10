@@ -1,5 +1,7 @@
 # Security Threat Landscape #
+
 ## The Security Threat Landscape ##
+
 - **Threat:** has the potential to cause harm to an IT asset.
 - **Vulnerability:** a weakness that compromises the security or funtionality of a system.
 - **Exploit:** uses a weakness to compromise the security or funtionality of a system.
@@ -17,7 +19,16 @@
 - Reflection and Amplification Attack.
 - Man In The Middle Attacks such as ARP spoofing.
 - Password Attacks.
-- Malware. 
+- Malware.
+
+| Attack               | Counter Measures                                                                       |
+|----------------------|----------------------------------------------------------------------------------------|
+| VLAN Hopping         | Static access ports, disabling of DTP, avoidance of trunk native VLAN on access ports. |
+| STP Spoofing         | BDPU Guard/Root Guard                                                                  |
+| CAM/MAC Spoofing     | Port Security (MAC LIMIT)                                                              |
+| ARP Spoofing         | ARP inspection                                                                         |
+| DHCP Starvation      | Port Security                                                                          |
+| DHCP Server Spoofing | DHCP snooping                                                                          |
 
 ## Firewalls and IDS/IPS ##
 - IDS: Intrusion detection system.
