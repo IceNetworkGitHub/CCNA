@@ -4,7 +4,7 @@
 - ```show port-security```
 - Interface port security settings: ```show port-security int gig/0/0```
 - To see disabled ports: ```show int status err-disabled```
-- To enable switchport security. This is an interface command: ```switchport port-security```
+- To enable switchport security. This is an interface subcommand: ```switchport port-security```
   
 - Check first to see how many MAC addresses are behind a port before turning on port-security. If we see more than one, the port will be shutdown. Investigate first.
 - Best practice is to administratively shut down unused switch ports. This stops somebody getting access to the network if they physically connect to the port.
@@ -14,9 +14,9 @@
 - Turning on port security forces the interface to **only allow one MAC address** and it's not locked down to a particular MAC address.
 - The default response to violating port security turns off the port.
 
-- To change the maximum of MAC addresses for an interface: ```switchport port-security maximum 5```
+- To change the maximum of MAC addresses for an interface (default is 1): ```switchport port-security maximum 5```
 - We can also hard code MAC addresses: ```switchport port-security mac-address 00H.2233.4455```
-- Another way is to use sticky. It takes the MAC addresses learned dynamically and puts it into the running config. This is the scaleable solution. Hardcoding the MAC addressing in only works in really small networks. If we want to make them permanent we would save the startup config: ```switchport port-security mac-address sticky```
+- Another way is to use sticky. It takes the MAC addresses learned dynamically and puts it into the running config. This is the scaleable solution. Hardcoding the MAC addressing in only works in really small networks. If we want to make sticky addresses permanent, we would have to ```copy running-config startup-config.``` Turn on the sticky feature: ```switchport port-security mac-address sticky```
 - If you want to clear port security stickys: ```clear port-security sticky | address | interface```
 - We can change the default violation response: ```switchport port-security violation | restrict | protect | shutdown```
   - **Shutdown (Default):** The interface is place into the error-disabled state, blocking all traffic.
