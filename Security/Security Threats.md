@@ -3,9 +3,9 @@
 ## The Security Threat Landscape ##
 
 - **Threat:** has the potential to cause harm to an IT asset.
-- **Vulnerability:** a weakness that compromises the security or funtionality of a system.
+- **Vulnerability:** a weakness that compromises the security or funtionality of a system or the integrity of data.
 - **Exploit:** uses a weakness to compromise the security or funtionality of a system.
-- **Risk:** the likelihood of a successful attack.
+- **Threat:** the likelihood of an attacker successfully using an exploit.
 - **Mitigation:** techniques to eliminate or reduce the potential of and seriousness of an attack.
 - **Malware:** is malicious software, including:
 	- Viruses: software which inserts itself into other software and can spread from computer to computer. Requires human action to spread.
@@ -29,6 +29,19 @@
 | ARP Spoofing         | ARP inspection                                                                         |
 | DHCP Starvation      | Port Security                                                                          |
 | DHCP Server Spoofing | DHCP snooping                                                                          |
+
+## Common Social Engineering Attacks ##
+
+| Attack Type        | Goal                                                          |
+|--------------------|---------------------------------------------------------------|
+| Social Engineering | Exploits human trust and social behavior.                     |
+| Phishing           | Disguises a malicious invitation as something legitimate.     |
+| Spear phishing     | Targets group of similar users.                               |
+| Whaling            | Targets high-profile individuals.                             |
+| Vishing            | Uses voice calls.                                             |
+| Smishing           | Uses SMS text messages.                                       |
+| Pharming           | Uses legitimate services to send users to a compromised site. |
+| Watering hole      | Targets specific victims who visit a compromised site.        |
 
 ## Firewalls and IDS/IPS ##
 - IDS: Intrusion detection system.
@@ -101,4 +114,16 @@
 
 ## Threat Defense Solutions ##
 - 
-- 
+
+
+## Controlling and Monitoring User Access (AAA) ##
+
+- AAA server is for example Cisco's ISE platform or Microsoft's Active Directory. AAA servers usually support the following two protocols to communicate with enterprise resources.
+  - **TACACS+**: A Cisco proprietary protocol that separates each of the AAA functions. Communication is secure and encrypted over TCP port 49.
+  - **RADIUS:** A standards-based protocol that combines authentication and authorization into a single resource. Communication uses UDP ports 1812 and 1813 (accounting) but is not completely encrypted.
+
+&nbsp;
+
+- **Authentication:** Who is the user?
+- **Authorization:** What is the user allowed to do?
+- **Accounting:** What did the user do?
