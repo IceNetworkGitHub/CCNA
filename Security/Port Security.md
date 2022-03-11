@@ -31,7 +31,7 @@
 
 - Before we automate a response let's first determine the reason behind the Errdisabled state: ```show errdisable recovery```
 - To enable auto recovery, excuted in global config mode: ```errdisable recovery cause psecure-violation```
-- When a port goes into err-disabled mode, we have to wait 5 minutes before auto recovery kicks in. To shorten that to 30 seconds do: ```errdisable recovery interval 30``` 
+- When a port goes into err-disabled mode, we have to wait 5 minutes before auto recovery kicks in. To shorten that to 30 seconds do: ```errdisable recovery interval 30```
 - If you want to see the timer in action: ```show errdisable recovery```
 
 Kannski?
