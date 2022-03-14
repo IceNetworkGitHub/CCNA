@@ -37,3 +37,8 @@
 Kannski?
 - ```no errdisable detect cause all```
 - ```show errdisable detect```
+
+## Source Guard ##
+
+- ```ip verify source port security```This verifies both the source ip and MAC address.
+- ```show ip verify source```
