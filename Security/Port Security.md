@@ -2,6 +2,7 @@
 
 - Port Security uses the source MAC address of incoming frames. If the MAC address is not a secure MAC then port security will take action.
 - ```show port-security```
+- ```show port-security address```
 - Interface port security settings: ```show port-security int gig/0/0```
 - To see disabled ports: ```show int status err-disabled```
 - To enable switchport security. This is an interface subcommand: ```switchport port-security```
@@ -9,7 +10,7 @@
 - Check first to see how many MAC addresses are behind a port before turning on port-security. If we see more than one, the port will be shutdown. Investigate first.
 - Best practice is to administratively shut down unused switch ports. This stops somebody getting access to the network if they physically connect to the port.
 - Cam table overflow is used to send thousands of frames from thousands of bogus MAC addresses. When his CAM table is consumed and full, the switch is not able to remember MAC addresses. It stops knowing which port has what MAC address associated with it and the switch starts sending out traffic on all the ports and the attacker can listen in on the traffic regardless of the VLAN it’s associated with.
-- Ports cannot be dynamic if we want to setup port security on. It cannot be a dynamic layer 2 port. Fix that, switchport mode access or trunk. Another trick is to do switchport host, that forces the port into access mode and it also turns on portfast for that port, then the port doesn’t have to wait for the listening and learning states for spanning tree.
+- Ports cannot be dynamic if we want to enable port security on it. The switchport mode must either be access or trunk. Another trick is to do switchport host, that forces the port into access mode and it also turns on portfast for that port, then the port doesn’t have to wait for the listening and learning states for spanning tree.
 - To enable port security on that interface: ```switchport security```
 - Turning on port security forces the interface to **only allow one MAC address** and it's not locked down to a particular MAC address.
 - The default response to violating port security turns off the port.
@@ -33,12 +34,3 @@
 - To enable auto recovery, excuted in global config mode: ```errdisable recovery cause psecure-violation```
 - When a port goes into err-disabled mode, we have to wait 5 minutes before auto recovery kicks in. To shorten that to 30 seconds do: ```errdisable recovery interval 30```
 - If you want to see the timer in action: ```show errdisable recovery```
-
-Kannski?
-- ```no errdisable detect cause all```
-- ```show errdisable detect```
-
-## Source Guard ##
-
-- ```ip verify source port security```This verifies both the source ip and MAC address.
-- ```show ip verify source```

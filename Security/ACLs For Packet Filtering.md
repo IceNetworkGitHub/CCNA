@@ -33,7 +33,7 @@
 - You can have a maximum of one ACL per interface per direction.
 - You can have both an inbound and an outbound ACL on the same interface, but not 2 inbound, or 2 outbound ACLs.
 - An interface can have no ACL applied, an inbound ACL only, an outbound ACL only, or ACLs in both directions.
-- Done on the interface level. ```ip access-group 100 out``` or ```ip access-group 101 in``` 
+- Done on the interface level. ```ip access-group 100 out``` or ```ip access-group 101 in```
 - ```show ip interface f1/0 | include access list```
 
 ## Standard vs Extended ACLs ##
@@ -143,10 +143,5 @@
 - Disable an ACL from its interface (using no ip access-group interface subcommand) before making changes to the ACL.
 
 ## Cisco Documentation ##
-<<<<<<< HEAD
-- https://www.cisco.com/c/en/us/support/docs/security/ios-firewall/23602-confaccesslists.html
-- Cisco Learning Network.
-=======
 
-- https://www.cisco.com/c/en/us/support/docs/security/ios-firewall/23602-confaccesslists.html
->>>>>>> 39db7ca3f4d2079ad7930f6bbaaf0941f96de038
+- <https://www.cisco.com/c/en/us/support/docs/security/ios-firewall/23602-confaccesslists.html>
