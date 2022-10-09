@@ -116,4 +116,7 @@ It's a link state protocol, each router describes itself and its interfaces to i
 - If we want a specific router to become the DR we would make sure it has the highest ospf priority. ```ip ospf priority 100```
 - ```show ip ospf neighbors``` 
 	- 2WAY/DROTHER relationship do not directly exchange routes with each other.
-- 
+
+
+
+NOTES From David Bombal.
